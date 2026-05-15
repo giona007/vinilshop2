@@ -1,0 +1,1234 @@
+/* ============================================================
+   VinilShop — CSS semplificato per esame di maturità
+   Palette: nero + rosso + bianco
+   ============================================================ */
+
+/* NOTE: questo file definisce variabili CSS in :root per mantenere
+    coerenza cromatica e tipografica; modificando le variabili si può
+    cambiare l'aspetto globale senza riscrivere le regole. */
+
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@300;400&display=swap');
+
+/* ── VARIABILI ────────────────────────────────────────────── */
+:root {
+    --rosso:       #cc0000;
+    --rosso-scuro: #900000;
+    --nero:        #0a0a0a;
+    --nero-card:   #131313;
+    --grigio:      #2a2a2a;
+    --bianco:      #f5f0eb;
+    --bianco-off:  #d4cfc9;
+    --font-display: 'Bebas Neue', sans-serif;
+    --font-body:    'Barlow Condensed', sans-serif;
+    --font-light:   'Barlow', sans-serif;
+    --radius: 6px;
+}
+
+/* ── RESET ────────────────────────────────────────────────── */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+    background-color: var(--nero);
+    color: var(--bianco);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.5;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ── HEADER ───────────────────────────────────────────────── */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 50px;
+    background: var(--nero);
+    border-bottom: 1px solid #1e1e1e;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+/* LOGO */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+}
+
+.logo img {
+    width: 44px;
+    height: 44px;
+    object-fit: contain;
+}
+
+.logo span, .logo h1 {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    color: var(--rosso);
+    text-transform: uppercase;
+}
+
+/* NAV */
+nav ul {
+    list-style: none;
+    display: flex;
+}
+
+nav ul li a {
+    color: var(--bianco-off);
+    text-decoration: none;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 8px 18px;
+    display: block;
+    position: relative;
+    transition: color 0.25s ease;
+}
+
+/* Sottolineatura animata al passaggio del mouse */
+nav ul li a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 18px;
+    right: 18px;
+    height: 2px;
+    background: var(--rosso);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.25s ease;
+}
+
+nav ul li a:hover { color: var(--bianco); }
+nav ul li a:hover::after { transform: scaleX(1); }
+nav ul li a.is-active { color: var(--bianco); }
+nav ul li a.is-active::after { transform: scaleX(1); }
+
+/* ICONE HEADER */
+.nav-icons {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.nav-icons a {
+    color: var(--bianco-off);
+    text-decoration: none;
+    font-size: 1.3rem;
+    transition: color 0.25s ease;
+}
+
+.nav-icons a:hover { color: var(--rosso); }
+
+.benvenuto {
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--bianco-off);
+}
+
+.logout-form {
+    display: inline-flex;
+}
+
+.btn-logout {
+    border: 1px solid #3a3a3a;
+    background: transparent;
+    color: var(--bianco-off);
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-radius: var(--radius);
+    cursor: pointer;
+    padding: 6px 10px;
+    transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-logout:hover {
+    border-color: var(--rosso);
+    color: var(--bianco);
+}
+
+/* Badge contatore carrello */
+.icona-carrello { position: relative; }
+
+.badge-carrello {
+    position: absolute;
+    top: -6px;
+    right: -8px;
+    background: var(--rosso);
+    color: white;
+    font-size: 0.65rem;
+    font-family: var(--font-light);
+    font-weight: 700;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ── MENU (barra rossa) ───────────────────────────────────── */
+.menu-nav { background: var(--rosso); }
+
+.menu {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+}
+
+.menu li a {
+    color: white;
+    text-decoration: none;
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    letter-spacing: 0.1em;
+    padding: 14px 40px;
+    display: block;
+    text-transform: uppercase;
+    transition: background 0.25s ease;
+}
+
+.menu li a:hover { background: rgba(0, 0, 0, 0.2); }
+
+/* ── MAIN ─────────────────────────────────────────────────── */
+main {
+    padding: 50px;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+    flex: 1 0 auto;
+    animation: fadeUp 0.28s ease-out;
+}
+
+/* ── FOOTER ─────────────────────────────────────────────── */
+.site-footer {
+    flex-shrink: 0;
+    margin-top: auto;
+    padding: 0;
+    border-top: 3px solid var(--rosso);
+    background: linear-gradient(165deg, #0d0d0d 0%, #050505 45%, #0a0a0a 100%);
+    box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.45);
+}
+
+.footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 32px 50px 40px;
+}
+
+.footer-top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 22px 28px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.footer-brand {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px 18px;
+}
+
+.footer-brand-name {
+    font-family: var(--font-display);
+    font-size: 1.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--rosso);
+}
+
+.footer-brand-line {
+    width: 1px;
+    height: 28px;
+    background: linear-gradient(180deg, transparent, #3a3a3a, transparent);
+}
+
+.footer-brand-tag {
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--bianco-off);
+}
+
+.footer-link-chi-siamo {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 22px;
+    border-radius: var(--radius);
+    border: 1px solid rgba(204, 0, 0, 0.45);
+    background: rgba(204, 0, 0, 0.08);
+    color: var(--bianco);
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.22s ease, border-color 0.22s ease, transform 0.2s ease;
+}
+
+.footer-link-chi-siamo:hover {
+    background: rgba(204, 0, 0, 0.2);
+    border-color: var(--rosso);
+    transform: translateY(-1px);
+}
+
+.footer-link-arrow {
+    font-size: 1rem;
+    color: var(--rosso);
+    transition: transform 0.2s ease;
+}
+
+.footer-link-chi-siamo:hover .footer-link-arrow {
+    transform: translateX(4px);
+}
+
+.footer-disclaimer {
+    margin: 0;
+    padding-top: 20px;
+    max-width: 52rem;
+    font-family: var(--font-light);
+    font-size: 0.84rem;
+    line-height: 1.7;
+    color: #9a9590;
+}
+
+/* Pagina Chi siamo */
+.main-chi-siamo .chi-siamo-layout {
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.chi-siamo-card {
+    background: var(--nero-card);
+    border: 1px solid #222;
+    border-radius: var(--radius);
+    padding: 26px 28px 28px;
+    box-shadow: 0 14px 36px rgba(0, 0, 0, 0.35);
+}
+
+.chi-siamo-card-note {
+    border-color: rgba(204, 0, 0, 0.25);
+    background: linear-gradient(135deg, #141414 0%, #101010 100%);
+}
+
+.chi-siamo-card-title {
+    font-family: var(--font-display);
+    font-size: 1.45rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--rosso);
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #2a2a2a;
+}
+
+.chi-siamo-card p,
+.chi-siamo-card li {
+    color: var(--bianco-off);
+    font-family: var(--font-light);
+    font-size: 1rem;
+    line-height: 1.75;
+}
+
+.chi-siamo-card p {
+    margin: 0;
+}
+
+.chi-siamo-list {
+    margin: 0;
+    padding-left: 1.15rem;
+}
+
+.chi-siamo-list li {
+    margin-bottom: 10px;
+}
+
+.chi-siamo-list li:last-child {
+    margin-bottom: 0;
+}
+
+.chi-siamo-back {
+    margin-top: 8px;
+}
+
+.link-indietro {
+    color: var(--rosso);
+    text-decoration: none;
+    font-family: var(--font-body);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+}
+
+.link-indietro:hover {
+    color: var(--bianco);
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Titolo di ogni sezione */
+.titolo-sezione {
+    font-family: var(--font-display);
+    font-size: 3rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--bianco);
+    margin-bottom: 40px;
+    padding-bottom: 14px;
+    border-bottom: 2px solid var(--rosso);
+}
+
+/* ── GRIGLIA ARTISTI ──────────────────────────────────────── */
+.griglia-artisti {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 24px;
+}
+
+.card-artista {
+    background: var(--nero-card);
+    border-radius: var(--radius);
+    overflow: hidden;
+    cursor: pointer;
+    border: 1px solid #1e1e1e;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card-artista:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+}
+
+.card-artista img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+}
+
+.card-artista:hover img { transform: scale(1.05); }
+
+.nome-artista {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--rosso);
+    padding: 14px 16px 16px;
+}
+
+/* ── GRIGLIA ALBUM ────────────────────────────────────────── */
+.filtro {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 36px;
+}
+
+.filtro label {
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--bianco-off);
+}
+
+#filtro-genere {
+    background: var(--grigio);
+    border: 1px solid #444;
+    color: var(--bianco);
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    padding: 8px 16px;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: border-color 0.25s ease;
+}
+
+#filtro-genere:focus {
+    outline: none;
+    border-color: var(--rosso);
+}
+
+.griglia-album {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 24px;
+}
+
+.card-album {
+    background: var(--nero-card);
+    border-radius: var(--radius);
+    overflow: hidden;
+    cursor: pointer;
+    border: 1px solid #1e1e1e;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card-album:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.7);
+}
+
+.card-album img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+}
+
+.card-album:hover img { transform: scale(1.04); }
+
+.titolo-album {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    color: var(--bianco);
+    padding: 12px 14px 2px;
+}
+
+.artista-album {
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    font-style: italic;
+    color: var(--bianco-off);
+    padding: 0 14px 4px;
+}
+
+.genere-album {
+    font-family: var(--font-light);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--rosso);
+    padding: 0 14px 14px;
+}
+
+/* ── MODALI ───────────────────────────────────────────────── */
+.modale-overlay {
+    position: fixed;
+    inset: 0;                        /* scorciatoia per top/right/bottom/left: 0 */
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+}
+
+.modale-box {
+    background: var(--nero-card);
+    border: 1px solid #2a2a2a;
+    border-radius: var(--radius);
+    padding: 36px;
+    max-width: 480px;
+    width: 90%;
+    position: relative;
+    text-align: center;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8);
+}
+
+.modale-chiudi {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background: transparent;
+    border: none;
+    color: var(--bianco-off);
+    font-size: 1.1rem;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.25s ease;
+}
+
+.modale-chiudi:hover { background: var(--grigio); }
+
+.modale-box img {
+    width: 180px;
+    border-radius: var(--radius);
+    margin-bottom: 20px;
+}
+
+.modale-box h2 {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+}
+
+.modale-box p {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    color: var(--bianco-off);
+    font-style: italic;
+    margin-bottom: 20px;
+}
+
+.prezzo-selezionato {
+    font-size: 1rem;
+}
+
+.controllo-quantita-modale {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    margin-bottom: 18px;
+}
+
+.controllo-quantita-modale label {
+    color: var(--bianco-off);
+}
+
+.controllo-quantita-modale input {
+    width: 100px;
+    background: var(--grigio);
+    border: 1px solid #333;
+    border-radius: var(--radius);
+    color: var(--bianco);
+    padding: 8px 10px;
+}
+
+.msg-login-required a {
+    color: var(--rosso);
+    text-decoration: none;
+}
+
+/* Selezione edizioni album */
+.modale-edizioni {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 18px 0;
+    text-align: left;
+}
+
+.edizione-radio {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    border: 1px solid var(--grigio);
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: border-color 0.25s ease, background 0.25s ease;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+}
+
+.edizione-radio:hover {
+    border-color: var(--rosso-scuro);
+    background: rgba(204, 0, 0, 0.06);
+}
+
+.edizione-radio input[type="radio"] { accent-color: var(--rosso); }
+
+/* Bottone principale */
+.btn-aggiungi-carrello {
+    background: var(--rosso);
+    color: white;
+    border: none;
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 14px 32px;
+    border-radius: var(--radius);
+    cursor: pointer;
+    width: 100%;
+    transition: background 0.25s ease;
+}
+
+.btn-aggiungi-carrello:hover { background: var(--rosso-scuro); }
+
+/* ── CARRELLO ─────────────────────────────────────────────── */
+.riga-carrello {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: var(--nero-card);
+    border: 1px solid #1e1e1e;
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    margin-bottom: 14px;
+}
+
+.riga-carrello img {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.riga-info { flex: 1; }
+
+.riga-titolo {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    color: var(--bianco);
+}
+
+.riga-artista {
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    color: var(--bianco-off);
+    font-style: italic;
+}
+
+.riga-edizione {
+    font-family: var(--font-light);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    color: var(--rosso);
+    margin-top: 2px;
+}
+
+.riga-prezzo {
+    font-size: 0.78rem;
+    color: var(--bianco-off);
+}
+
+.riga-qta-text {
+    font-size: 0.85rem;
+    color: var(--bianco-off);
+    margin-top: 4px !important;
+}
+
+/* Controlli quantità */
+.riga-quantita {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.riga-quantita button {
+    background: var(--grigio);
+    border: none;
+    color: var(--bianco);
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.25s ease;
+}
+
+.riga-quantita button:hover { background: var(--rosso); }
+
+.riga-quantita span {
+    font-family: var(--font-body);
+    min-width: 20px;
+    text-align: center;
+}
+
+.riga-subtotale {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    color: var(--bianco);
+    min-width: 80px;
+    text-align: right;
+}
+
+.btn-rimuovi {
+    background: transparent;
+    border: none;
+    color: #444;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: color 0.25s ease;
+}
+
+.btn-rimuovi:hover { color: var(--rosso); }
+
+/* Totale carrello */
+.carrello-footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 30px;
+    margin-top: 30px;
+    padding-top: 24px;
+    border-top: 1px solid #1e1e1e;
+}
+
+.totale-carrello {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    text-transform: uppercase;
+}
+
+.btn-acquista {
+    background: var(--rosso);
+    color: white;
+    border: none;
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 14px 40px;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: background 0.25s ease;
+}
+
+.btn-acquista:hover { background: var(--rosso-scuro); }
+
+.carrello-vuoto {
+    font-size: 1rem;
+    color: var(--bianco-off);
+    border: 1px dashed #333;
+    border-radius: var(--radius);
+    padding: 18px;
+    text-align: center;
+}
+
+.carrello-vuoto a {
+    color: var(--rosso);
+    text-decoration: none;
+}
+
+/* ── LOGIN / REGISTRAZIONE ────────────────────────────────── */
+.form-container {
+    max-width: 440px;
+    margin: 60px auto;
+    background: var(--nero-card);
+    border: 1px solid #1e1e1e;
+    border-radius: var(--radius);
+    padding: 42px 40px;
+}
+
+.form-container h2 {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    text-transform: uppercase;
+    color: var(--bianco);
+    margin-bottom: 28px;
+    text-align: center;
+}
+
+.form-container label {
+    display: block;
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--bianco-off);
+    margin-bottom: 6px;
+    margin-top: 16px;
+}
+
+.form-container input {
+    width: 100%;
+    background: var(--grigio);
+    border: 1px solid #333;
+    border-radius: var(--radius);
+    color: var(--bianco);
+    font-family: var(--font-light);
+    font-size: 0.9rem;
+    padding: 11px 14px;
+    outline: none;
+    transition: border-color 0.25s ease;
+}
+
+.form-container input::placeholder { color: #444; }
+.form-container input:focus { border-color: var(--rosso); }
+
+.form-container button[type="submit"] {
+    width: 100%;
+    background: var(--rosso);
+    color: white;
+    border: none;
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 14px;
+    border-radius: var(--radius);
+    cursor: pointer;
+    margin-top: 26px;
+    transition: background 0.25s ease;
+}
+
+.form-container button[type="submit"]:hover { background: var(--rosso-scuro); }
+
+.form-container p {
+    text-align: center;
+    font-family: var(--font-light);
+    font-size: 0.85rem;
+    color: var(--bianco-off);
+    margin-top: 20px;
+}
+
+.form-container p a {
+    color: var(--rosso);
+    text-decoration: none;
+}
+
+.msg-errore {
+    background: rgba(204, 0, 0, 0.12);
+    border: 1px solid rgba(204, 0, 0, 0.4);
+    border-radius: var(--radius);
+    color: #ff6b6b;
+    font-size: 0.85rem;
+    padding: 10px 14px;
+    margin-bottom: 18px;
+    text-align: center;
+}
+
+.msg-ok {
+    background: rgba(31, 140, 79, 0.2);
+    border: 1px solid rgba(31, 140, 79, 0.6);
+    border-radius: var(--radius);
+    color: #98f1bf;
+    font-size: 0.9rem;
+    padding: 10px 14px;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+/* ── HOME PAGE ────────────────────────────────────────────── */
+.artisti {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: 60px 0;
+    flex-wrap: wrap;
+}
+
+.artista {
+    width: 260px;
+    height: 360px;
+    object-fit: cover;
+    border-radius: var(--radius);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+    transition: transform 0.35s ease;
+}
+
+.artista:hover { transform: scale(1.05); }
+
+.scopri { text-align: center; margin: 20px 0 70px; }
+
+.btn-scopri {
+    background: var(--rosso);
+    color: white;
+    padding: 15px 50px;
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: var(--radius);
+    display: inline-block;
+    transition: background 0.25s ease;
+}
+
+.btn-scopri:hover { background: var(--rosso-scuro); }
+
+/* ── MODALE ARTISTA / CTA ────────────────────────────────── */
+.scheda-artista {
+    max-width: 920px;
+    width: min(920px, 95%);
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    text-align: left;
+}
+
+.scheda-foto img {
+    width: 280px;
+    margin: 0;
+}
+
+.separatore-verticale {
+    width: 1px;
+    align-self: stretch;
+    background: #2a2a2a;
+}
+
+.nome-artista-grande {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.pulsanti-streaming {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 100%;
+    max-width: 440px;
+}
+
+.btn-spotify,
+.btn-applemusic {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0;
+    border: 1px solid transparent;
+    border-radius: var(--radius);
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 18px 10px 10px;
+    min-height: 76px;
+    font-weight: 600;
+    transition: transform 0.2s ease, filter 0.2s ease, box-shadow 0.2s ease;
+    box-sizing: border-box;
+}
+
+.btn-streaming-row {
+    width: 100%;
+}
+
+.btn-spotify {
+    background: #1db954;
+}
+
+.btn-applemusic {
+    background: #e02424;
+}
+
+.btn-spotify:hover,
+.btn-applemusic:hover {
+    transform: translateY(-1px);
+    filter: brightness(0.95);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+}
+
+.streaming-icon-wrap {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 14px 4px 6px;
+    margin-right: 4px;
+}
+
+.icon-streaming-lg {
+    width: 56px;
+    height: 56px;
+    max-width: 56px;
+    max-height: 56px;
+    object-fit: contain;
+    display: block;
+    flex-shrink: 0;
+}
+
+.streaming-cta-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    text-align: left;
+    gap: 2px;
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.streaming-title {
+    font-size: 1.15rem;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+}
+
+.streaming-sub {
+    font-size: 0.82rem;
+    font-weight: 500;
+    opacity: 0.92;
+}
+
+@media (min-width: 900px) {
+    .icon-streaming-lg {
+        width: 64px;
+        height: 64px;
+        max-width: 64px;
+        max-height: 64px;
+    }
+
+    .btn-spotify,
+    .btn-applemusic {
+        min-height: 84px;
+        padding: 12px 22px 12px 12px;
+    }
+
+    .streaming-title {
+        font-size: 1.25rem;
+    }
+}
+
+/* ── TOAST E POPUP ORDINE ────────────────────────────────── */
+.popup-toast {
+    position: fixed;
+    bottom: 22px;
+    right: 22px;
+    z-index: 250;
+    background: #111;
+    color: var(--bianco);
+    border: 1px solid #2d2d2d;
+    border-left: 4px solid var(--rosso);
+    border-radius: var(--radius);
+    padding: 12px 16px;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5);
+}
+
+.toast-msg {
+    display: block;
+}
+
+.popup-ordine-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 260;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.82);
+}
+
+.popup-ordine-box {
+    background: var(--nero-card);
+    border: 1px solid #2a2a2a;
+    border-radius: var(--radius);
+    padding: 28px;
+    width: min(420px, 92%);
+    text-align: center;
+}
+
+.popup-checkmark {
+    font-size: 2rem;
+    color: #33d17a;
+    margin-bottom: 10px;
+}
+
+.popup-ordine-box h2 {
+    font-family: var(--font-display);
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+}
+
+.popup-ordine-box p {
+    color: var(--bianco-off);
+    margin-bottom: 20px;
+}
+
+.popup-ordine-box button {
+    border: none;
+    border-radius: var(--radius);
+    padding: 12px 20px;
+    color: white;
+    background: var(--rosso);
+    cursor: pointer;
+}
+
+.popup-ordine-box button:hover {
+    background: var(--rosso-scuro);
+}
+
+/* ── RESPONSIVE ───────────────────────────────────────────── */
+@media (max-width: 768px) {
+    header { padding: 14px 20px; }
+    main   { padding: 30px 20px; }
+
+    .footer-inner {
+        padding: 26px 20px 32px;
+    }
+
+    .footer-top {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .footer-brand-line {
+        display: none;
+    }
+
+    .footer-link-chi-siamo {
+        width: 100%;
+        justify-content: center;
+    }
+
+    nav { display: none; }
+
+    .griglia-artisti,
+    .griglia-album {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+
+    .riga-carrello  { flex-wrap: wrap; }
+    .carrello-footer { flex-direction: column; gap: 16px; }
+
+    .artisti { gap: 16px; }
+    .artista { width: 180px; height: 240px; }
+
+    .scheda-artista {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .pulsanti-streaming {
+        max-width: none;
+        margin: 0 auto;
+    }
+
+    .btn-streaming-row {
+        justify-content: flex-start;
+    }
+
+    .streaming-cta-text {
+        text-align: left;
+        align-items: flex-start;
+    }
+
+    .separatore-verticale {
+        display: none;
+    }
+
+    .scheda-foto img {
+        width: 200px;
+    }
+
+    .nome-artista-grande {
+        font-size: 2.2rem;
+    }
+}
