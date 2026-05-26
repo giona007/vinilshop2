@@ -1,22 +1,33 @@
 <?php
-/*
- * catalogo.php
- * Esempio di catalogo con card statiche che simulano i vinili in vendita.
- * Le card contengono dati in attributi data-* che lo script.js legge per
- * popolare la modale di acquisto.
- */
 include('confing.php');
 include('partials/template.php');
 include('partials/header.php');
 include('partials/footer.php');
-
-// gestione logout inline
+ 
+// Gestisce il logout inviato dal form nell'header
 if (isset($_POST['logout'])) {
     $_SESSION = [];
     session_destroy();
     header("Location: catalogo.php");
     exit;
 }
+ 
+/*
+ * Elenco degli album statici.
+ * Ogni voce contiene:
+ *   vinileId, genere, titolo, artista, img,
+ *   edizioneBasicId, basicPrice, edizioneLimitedId, limitedPrice
+ *
+ * Gli ID edizione corrispondono alle righe nella tabella `vinili_edizioni`.
+ */
+$albums = [
+    [1, 'trap', 'Anti Anti',                   '18k',       'immagini/anti-anti.png',                  1, '19.99',  2, '34.99'],
+    [2, 'trap', 'IO',                           '18k',       'immagini/io.png',                         3, '19.99',  4, '34.99'],
+    [3, 'rage', 'Crash Out',                    'Aira',      'immagini/crashout.png',                   5, '19.99',  6, '34.99'],
+    [4, 'rap',  'Anche gli eroi muoiono',       'Kid Yugi',  'immagini/anche-gli-eroi-muoiono.png',     7, '19.99',  8, '34.99'],
+    [5, 'trap', 'The Globe',                    'Kid Yugi',  'immagini/the-globe-baisc.png',            9, '19.99', 10, '34.99'],
+    [6, 'rap',  'Morendo ad occhi aperti',      'Promessa',  'immagini/morendo-ad-occhi-aperti.png',   11, '19.99', 12, '34.99'],
+];
 ?>
 <!DOCTYPE html>
 <html lang="it">
@@ -24,109 +35,52 @@ if (isset($_POST['logout'])) {
     <?php renderHead('VinilShop - Catalogo'); ?>
 </head>
 <body>
-
+ 
 <?php renderHeader('catalogo'); ?>
-
+ 
 <main>
-
-    <!-- FILTRO GENERE -->
+    <!-- Filtro per genere musicale -->
     <div class="filtro">
         <label for="filtro-genere">Filtra per genere:</label>
         <select id="filtro-genere" onchange="filtraGenere(this.value)">
-            <option value="tutti">tutti</option>
-            <option value="trap">trap</option>
-            <option value="rage">rage</option>
-            <option value="rap">rap</option>
+            <option value="tutti">Tutti</option>
+            <option value="trap">Trap</option>
+            <option value="rage">Rage</option>
+            <option value="rap">Rap</option>
         </select>
     </div>
-
-    <!-- GRIGLIA ALBUM -->
+ 
+    <!-- Griglia album: ogni card porta i dati dell'album negli attributi data-* -->
     <div class="griglia-album">
-
-        <div class="card-album" data-vinile-id="1" data-genere="trap"
-             data-titolo="Anti Anti" data-artista="18k"
-             data-img="immagini/anti-anti.png"
-             data-edizione-basic-id="1" data-basic="19.99"
-             data-edizione-limited-id="2" data-limited="34.99"
+        <?php foreach ($albums as [$vid, $genere, $titolo, $artista, $img, $basicId, $basic, $limitedId, $limited]): ?>
+        <div class="card-album"
+             data-vinile-id="<?= $vid ?>"
+             data-genere="<?= $genere ?>"
+             data-titolo="<?= htmlspecialchars($titolo) ?>"
+             data-artista="<?= htmlspecialchars($artista) ?>"
+             data-img="<?= htmlspecialchars($img) ?>"
+             data-edizione-basic-id="<?= $basicId ?>"   data-basic="<?= $basic ?>"
+             data-edizione-limited-id="<?= $limitedId ?>" data-limited="<?= $limited ?>"
              onclick="apriModale(this)">
-            <img src="immagini/anti-anti.png" alt="Anti Anti">
-            <p class="titolo-album">Anti Anti</p>
-            <p class="artista-album">(18k)</p>
-            <p class="genere-album">Genere: Trap</p>
+            <img src="<?= htmlspecialchars($img) ?>" alt="<?= htmlspecialchars($titolo) ?>">
+            <p class="titolo-album"><?= htmlspecialchars($titolo) ?></p>
+            <p class="artista-album">(<?= htmlspecialchars($artista) ?>)</p>
+            <p class="genere-album">Genere: <?= ucfirst($genere) ?></p>
         </div>
-
-        <div class="card-album" data-vinile-id="2" data-genere="trap"
-             data-titolo="IO" data-artista="18k"
-             data-img="immagini/io.png"
-             data-edizione-basic-id="3" data-basic="19.99"
-             data-edizione-limited-id="4" data-limited="34.99"
-             onclick="apriModale(this)">
-            <img src="immagini/io.png" alt="IO">
-            <p class="titolo-album">IO</p>
-            <p class="artista-album">(18k)</p>
-            <p class="genere-album">Genere: Trap</p>
-        </div>
-
-        <div class="card-album" data-vinile-id="3" data-genere="rage"
-             data-titolo="Crash Out" data-artista="Aira"
-             data-img="immagini/crashout.png"
-             data-edizione-basic-id="5" data-basic="19.99"
-             data-edizione-limited-id="6" data-limited="34.99"
-             onclick="apriModale(this)">
-            <img src="immagini/crashout.png" alt="Crash Out">
-            <p class="titolo-album">CRASH OUT</p>
-            <p class="artista-album">(Aira)</p>
-            <p class="genere-album">Genere: Rage</p>
-        </div>
-
-        <div class="card-album" data-vinile-id="4" data-genere="rap"
-             data-titolo="Anche gli eroi muoiono" data-artista="Kid Yugi"
-             data-img="immagini/anche-gli-eroi-muoiono.png"
-             data-edizione-basic-id="7" data-basic="19.99"
-             data-edizione-limited-id="8" data-limited="34.99"
-             onclick="apriModale(this)">
-            <img src="immagini/anche-gli-eroi-muoiono.png" alt="Anche gli eroi muoiono">
-            <p class="titolo-album">Anche gli eroi muoiono</p>
-            <p class="artista-album">(Kid Yugi)</p>
-            <p class="genere-album">Genere: Rap</p>
-        </div>
-
-        <div class="card-album" data-vinile-id="5" data-genere="trap"
-             data-titolo="The Globe" data-artista="Kid Yugi"
-             data-img="immagini/the-globe-baisc.png"
-             data-edizione-basic-id="9" data-basic="19.99"
-             data-edizione-limited-id="10" data-limited="34.99"
-             onclick="apriModale(this)">
-            <img src="immagini/the-globe-baisc.png" alt="The Globe">
-            <p class="titolo-album">The Globe</p>
-            <p class="artista-album">(Kid Yugi)</p>
-            <p class="genere-album">Genere: Trap</p>
-        </div>
-
-        <div class="card-album" data-vinile-id="6" data-genere="rap"
-             data-titolo="Morendo ad occhi aperti" data-artista="Promessa"
-             data-img="immagini/morendo-ad-occhi-aperti.png"
-             data-edizione-basic-id="11" data-basic="19.99"
-             data-edizione-limited-id="12" data-limited="34.99"
-             onclick="apriModale(this)">
-            <img src="immagini/morendo-ad-occhi-aperti.png" alt="Morendo ad occhi aperti">
-            <p class="titolo-album">Morendo ad occhi aperti</p>
-            <p class="artista-album">(Promessa)</p>
-            <p class="genere-album">Genere: Rap</p>
-        </div>
-
+        <?php endforeach; ?>
     </div>
 </main>
-
-<!-- MODALE ACQUISTO -->
+ 
+<!-- Modale di acquisto: si apre al click su una card -->
 <div id="modale-acquisto" class="modale-overlay" style="display:none"
      onclick="if(event.target===this) chiudiModale()">
     <div class="modale-box">
         <button class="modale-chiudi" onclick="chiudiModale()">✕</button>
         <img id="m-img" src="" alt="">
         <h2 id="m-titolo"></h2>
-        <p id="m-artista"></p>
-
+        <p  id="m-artista"></p>
+ 
+        <!-- Scelta edizione: Basic o Limited -->
         <div class="modale-edizioni">
             <label class="edizione-radio">
                 <input type="radio" name="edizione" value="basic" checked onchange="aggiornaPrezzo()">
@@ -137,29 +91,30 @@ if (isset($_POST['logout'])) {
                 <span>Limited Edition — € <span id="m-prezzo-limited"></span></span>
             </label>
         </div>
-
+ 
         <p class="prezzo-selezionato">Prezzo: <strong>€ <span id="m-prezzo-display"></span></strong></p>
+ 
+        <!-- Selettore quantità -->
         <div class="controllo-quantita-modale">
             <label for="m-quantita">Quanti ne ordini:</label>
             <input id="m-quantita" type="number" min="1" value="1">
         </div>
-
+ 
         <?php if (isset($_SESSION['utente_id'])): ?>
             <button class="btn-aggiungi-carrello" onclick="aggiungiAlCarrello()">Aggiungi al carrello 🛒</button>
         <?php else: ?>
+            <!-- Avvisa l'utente non loggato che deve prima accedere -->
             <p class="msg-login-required">⚠️ <a href="login.php">Accedi</a> per aggiungere al carrello.</p>
         <?php endif; ?>
     </div>
 </div>
-
-<!-- TOAST AGGIUNTO AL CARRELLO -->
+ 
+<!-- Toast temporaneo "prodotto aggiunto" -->
 <div id="popup-aggiunto" class="popup-toast" style="display:none">
     <span class="toast-msg">Prodotto aggiunto al carrello.</span>
 </div>
-
-    <?php renderFooter(); ?>
-
+ 
+<?php renderFooter(); ?>
 <script src="script.js"></script>
-
 </body>
 </html>
